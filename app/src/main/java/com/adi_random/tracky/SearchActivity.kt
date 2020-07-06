@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import com.adi_random.tracky.databinding.SearchActivityBinding
+import com.adi_random.tracky.init.initOptionMenu
 import com.adi_random.tracky.ui.main.search.SearchFragment
 
 class SearchActivity : AppCompatActivity() {
@@ -20,6 +21,7 @@ class SearchActivity : AppCompatActivity() {
         viewBinding = SearchActivityBinding.inflate(layoutInflater)
         val root = viewBinding.root
         setContentView(root)
+
 
         // Setup app bar
 
@@ -43,6 +45,7 @@ class SearchActivity : AppCompatActivity() {
             val fragment = SearchFragment.newInstance();
             val bundle = Bundle();
             bundle.putString(Intent.ACTION_SEARCH, query)
+            fragment.arguments = bundle;
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container, fragment)
                 .commitNow()
@@ -52,9 +55,9 @@ class SearchActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.app_bar_menu, menu);
-        return true;
+        return initOptionMenu(menu, this)
     }
+
 
     private fun updateAppBarQuery(q: String?) {
         supportActionBar?.customView?.findViewById<TextView>(R.id.query)?.apply {

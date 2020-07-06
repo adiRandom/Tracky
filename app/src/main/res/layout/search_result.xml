@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.adi_random.tracky.models.GoodreadsBook" />
+
+        <variable
+            name="result"
+            type="com.adi_random.tracky.models.GoodreadsBook" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:gravity="center"
+        android:paddingLeft="@dimen/search_result_padding"
+        android:paddingRight="@dimen/search_result_padding">
+
+        <ImageView
+            android:id="@+id/search_result_icon"
+            android:layout_width="@dimen/ic_search_result"
+            android:layout_height="@dimen/ic_search_result"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:contentDescription="Search result icon"
+            app:srcCompat="@drawable/ic_default_search_result" />
+
+        <LinearLayout
+            android:id="@+id/search_result_info_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <!--            TODO: Handle null-->
+            <TextView
+                android:id="@+id/search_result_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{result.best_book.title}" />
+
+            <TextView
+                android:id="@+id/search_result_author"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{result.best_book.author.name}" />
+
+        </LinearLayout>
+
+        <!--        TODO:Change icon-->
+        <ImageButton
+            android:id="@+id/search_result_add"
+            android:layout_width="@dimen/search_result_button"
+            android:layout_height="@dimen/search_result_button"
+            android:background="#00FFFFFF"
+            android:contentDescription="Search result add button"
+            app:srcCompat="@android:drawable/ic_menu_add" />
+
+    </LinearLayout>
+</layout>
