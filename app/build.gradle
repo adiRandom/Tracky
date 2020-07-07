@@ -16,8 +16,8 @@ android {
         applicationId "com.adi_random.tracky"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 2
-        versionName "1.0.1"
+        versionCode 3
+        versionName "1.0.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -124,5 +124,7 @@ dependencies {
     androidTestImplementation "com.android.support:support-annotations:27.1.1"
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
+
+    implementation("ru.gildor.coroutines:kotlin-coroutines-okhttp:1.0")
 
 }

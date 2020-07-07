@@ -32,9 +32,8 @@ class SearchActivity : AppCompatActivity() {
         //Get the query string
         if (Intent.ACTION_SEARCH == intent.action) {
             intent.getStringExtra(SearchManager.QUERY).also {
-//              TODO: Perform search
 
-                //Set the query in the appbar
+                //Add the query to the appbar
                 query = it
                 updateAppBarQuery(it)
             }
@@ -48,6 +47,7 @@ class SearchActivity : AppCompatActivity() {
             fragment.arguments = bundle;
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container, fragment)
+//                .addToBackStack(null)
                 .commitNow()
         }
 

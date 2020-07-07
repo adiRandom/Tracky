@@ -1,7 +1,8 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="search_query_margin">64dp</dimen>
-    <dimen name="ic_search_result">32dp</dimen>
+    <dimen name="ic_search_result">64dp</dimen>
     <dimen name="search_result_button">32dp</dimen>
     <dimen name="search_result_padding">8dp</dimen>
+    <dimen name="search_result_text_padding">4dp</dimen>
 </resources>
