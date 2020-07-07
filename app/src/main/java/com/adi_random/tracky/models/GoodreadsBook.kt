@@ -1,14 +1,11 @@
 package com.adi_random.tracky.models
 
-import android.graphics.Bitmap
-
 data class BestBook(
     val id: Int,
     val title: String,
     val author: Author,
     val image_url: String,
-    val small_image_url: String,
-    var imageBitmap: Bitmap?
+    val small_image_url: String
 )
 
 

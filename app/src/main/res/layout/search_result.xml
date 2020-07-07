@@ -19,6 +19,7 @@
         android:paddingRight="@dimen/search_result_padding">
 
         <ImageView
+            app:imageUrl="@{result.best_book.small_image_url}"
             android:id="@+id/search_result_icon"
             android:layout_width="@dimen/ic_search_result"
             android:layout_height="@dimen/ic_search_result"

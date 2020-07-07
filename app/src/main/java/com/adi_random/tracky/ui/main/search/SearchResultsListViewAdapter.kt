@@ -12,6 +12,7 @@ import com.adi_random.tracky.models.GoodreadsBook
  */
 class SearchResultsListViewAdapter(private var dataset: MutableLiveData<Array<GoodreadsBook>>) :
     RecyclerView.Adapter<SearchResultViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultViewHolder {
         val inflater = LayoutInflater.from(parent.context);
         val binding = SearchResultBinding.inflate(inflater, parent, false)
@@ -19,7 +20,6 @@ class SearchResultsListViewAdapter(private var dataset: MutableLiveData<Array<Go
     }
 
     override fun getItemCount(): Int {
-        val data = dataset.value
         return dataset.value?.size ?: 0;
     }
 
