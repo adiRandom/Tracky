@@ -1,4 +1,4 @@
-package com.adi_random.tracky.ui.main.search
+package com.adi_random.tracky.ui.search
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,11 +11,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adi_random.tracky.databinding.SearchFragmentBinding
-import com.adi_random.tracky.debug.SearchFragmentLifecycleObserver
 import com.adi_random.tracky.models.GoodreadsBook
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
+val QUERY_STATE_CODE = "query"
 
 class SearchFragment : Fragment() {
 
@@ -26,6 +24,7 @@ class SearchFragment : Fragment() {
     private val viewModel: SearchViewModel by viewModels()
     private lateinit var binding: SearchFragmentBinding
     private lateinit var searchResultListViewAdapter: SearchResultsListViewAdapter;
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,12 +38,8 @@ class SearchFragment : Fragment() {
         viewModel.getSearchResults().observe(this, searchResultObserver)
 
 
-        GlobalScope.launch {  //Perform the search
-            viewModel.search(query)
-        }
-
-
-        lifecycle.addObserver(SearchFragmentLifecycleObserver())
+        //Perform the search
+        viewModel.search(query)
 
     }
 

@@ -1,4 +1,4 @@
-package com.adi_random.tracky
+package com.adi_random.tracky.ui.search
 
 import android.app.SearchManager
 import android.content.Intent
@@ -7,9 +7,9 @@ import android.view.Menu
 import android.widget.TextView
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import com.adi_random.tracky.R
 import com.adi_random.tracky.databinding.SearchActivityBinding
 import com.adi_random.tracky.init.initOptionMenu
-import com.adi_random.tracky.ui.main.search.SearchFragment
 
 class SearchActivity : AppCompatActivity() {
 

@@ -7,7 +7,7 @@
         <import type="com.adi_random.tracky.models.GoodreadsBook" />
 
         <variable
-            name="result"
+            name="book"
             type="com.adi_random.tracky.models.GoodreadsBook" />
     </data>
 
@@ -19,8 +19,8 @@
         android:paddingRight="@dimen/search_result_padding">
 
         <ImageView
-            app:imageUrl="@{result.best_book.small_image_url}"
-            android:id="@+id/search_result_icon"
+            app:imageUrl="@{book.best_book.small_image_url}"
+            android:id="@+id/reading_list_item_icon"
             android:layout_width="@dimen/ic_search_result"
             android:layout_height="@dimen/ic_search_result"
             android:layout_gravity="center"
@@ -33,52 +33,40 @@
             app:srcCompat="@drawable/ic_default_search_result" />
 
         <LinearLayout
-            android:id="@+id/search_result_info_layout"
+            android:id="@+id/reading_list_item_info_layout"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_weight="1"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/search_result_add"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.4"
-            app:layout_constraintStart_toEndOf="@+id/search_result_icon"
+            app:layout_constraintStart_toEndOf="@+id/reading_list_item_icon"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.6">
 
             <TextView
-                android:id="@+id/search_result_title"
+                android:id="@+id/reading_list_item_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:singleLine="false"
-                android:text="@{result.best_book.title}"
+                android:text="@{book.best_book.title}"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/search_result_author"
+                android:id="@+id/reading_list_item_author"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text='@{"by " + result.best_book.author.name }' />
+                android:text='@{"by " + book.best_book.author.name }' />
 
         </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/search_result_add"
-            android:layout_width="@dimen/search_result_button"
-            android:layout_height="@dimen/search_result_button"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:background="#00FFFFFF"
-            android:contentDescription="Search result add button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_add_24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

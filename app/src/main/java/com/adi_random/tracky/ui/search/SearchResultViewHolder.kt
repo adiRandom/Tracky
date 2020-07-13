@@ -1,4 +1,4 @@
-package com.adi_random.tracky.ui.main.search
+package com.adi_random.tracky.ui.search
 
 import android.view.View
 import android.widget.ImageView
