@@ -13,8 +13,8 @@ import com.squareup.picasso.Picasso
  */
 class SearchResultViewHolder(private val binding: SearchResultBinding) :
     RecyclerView.ViewHolder(binding.root) {
-    public fun update(book: GoodreadsBook?) {
-        binding.result = book;
+    public fun update(book: GoodreadsBook?, onAdd: () -> Unit) {
+        binding.model = SearchResultViewHolderViewModel(book, onAdd);
         binding.executePendingBindings();
     }
 
@@ -26,4 +26,10 @@ class SearchResultViewHolder(private val binding: SearchResultBinding) :
         }
     }
 
+}
+
+class SearchResultViewHolderViewModel(val book: GoodreadsBook?, val _onAdd: () -> Unit) {
+    fun onAdd() {
+        _onAdd()
+    }
 }

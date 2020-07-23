@@ -44,6 +44,7 @@ class MainFragment : Fragment() {
                 tab.text = TAB_LAYOUT_LABELS[position]
             }.attach()
         }
+
     }
 
     companion object {

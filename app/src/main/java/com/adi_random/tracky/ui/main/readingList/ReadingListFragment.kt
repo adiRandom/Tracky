@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adi_random.tracky.databinding.ReadingListFragmentBinding
 
@@ -26,9 +27,13 @@ class ReadingListFragment : Fragment() {
 
         // Init the type
         viewModel.type = ReadingListType.getType(arguments?.getInt(EXTRA_TYPE) ?: 3)
+
+        viewModel.getReadingList().observe(this.viewLifecycleOwner) {
+            val adapter = ReadingListAdapter(it)
+            binding.readingListRecyclerView.swapAdapter(adapter, false)
+        }
     }
 
-//    TODO: Observe the viewmodel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +44,7 @@ class ReadingListFragment : Fragment() {
         //Init the recycler view
 
         val layoutManager = LinearLayoutManager(activity)
-        val adapter = ReadingListAdapter(viewModel.getReadingList())
+        val adapter = ReadingListAdapter(viewModel.getReadingList().value)
         binding.readingListRecyclerView.apply {
             this.adapter = adapter
             this.layoutManager = layoutManager

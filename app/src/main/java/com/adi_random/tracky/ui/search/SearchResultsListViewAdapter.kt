@@ -1,16 +1,18 @@
 package com.adi_random.tracky.ui.search
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.adi_random.tracky.databinding.SearchResultBinding
-import com.adi_random.tracky.models.GoodreadsBook
 
 /**
  * Created by Adrian Pascu on 06-Jul-20.
  */
-class SearchResultsListViewAdapter(private var dataset: MutableLiveData<Array<GoodreadsBook>>) :
+class SearchResultsListViewAdapter(
+    private var viewModel: SearchViewModel,
+    private val ctx: Context
+) :
     RecyclerView.Adapter<SearchResultViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultViewHolder {
@@ -20,16 +22,13 @@ class SearchResultsListViewAdapter(private var dataset: MutableLiveData<Array<Go
     }
 
     override fun getItemCount(): Int {
-        return dataset.value?.size ?: 0;
+        return viewModel.getSearchResults().value?.size ?: 0;
     }
 
     override fun onBindViewHolder(holder: SearchResultViewHolder, position: Int) {
-        holder.update(dataset.value?.get(position))
-    }
-
-    fun setData(newData: Array<GoodreadsBook>) {
-        dataset.postValue(newData)
-        notifyDataSetChanged()
+        holder.update(viewModel.getSearchResults().value?.get(position)) {
+            viewModel.addToReadingList(ctx, viewModel.getSearchResults().value?.get(position))
+        }
     }
 
 }

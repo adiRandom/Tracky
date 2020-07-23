@@ -4,11 +4,11 @@
 
     <data>
 
-        <import type="com.adi_random.tracky.models.GoodreadsBook" />
+        <import type="com.adi_random.tracky.ui.search.SearchResultViewHolderViewModel" />
 
         <variable
-            name="result"
-            type="com.adi_random.tracky.models.GoodreadsBook" />
+            name="model"
+            type="com.adi_random.tracky.ui.search.SearchResultViewHolderViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,7 +19,7 @@
         android:paddingRight="@dimen/search_result_padding">
 
         <ImageView
-            app:imageUrl="@{result.best_book.small_image_url}"
+            app:imageUrl="@{model.book.best_book.small_image_url}"
             android:id="@+id/search_result_icon"
             android:layout_width="@dimen/ic_search_result"
             android:layout_height="@dimen/ic_search_result"
@@ -54,7 +54,7 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:singleLine="false"
-                android:text="@{result.best_book.title}"
+                android:text="@{model.book.best_book.title}"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text='@{"by " + result.best_book.author.name }' />
+                android:text='@{"by " + model.book.best_book.author.name }' />
 
         </LinearLayout>
 
@@ -78,6 +78,7 @@
             android:contentDescription="Search result add button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:onClick="@{()->model.onAdd()}"
             app:srcCompat="@drawable/ic_baseline_add_24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

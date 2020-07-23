@@ -1,11 +1,14 @@
 package com.adi_random.tracky.ui.search
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.adi_random.tracky.api.searchBook
+import com.adi_random.tracky.database.Database
 import com.adi_random.tracky.models.GoodreadsBook
+import com.adi_random.tracky.ui.main.readingList.ReadingListType
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -58,5 +61,17 @@ class SearchViewModel(private val savedStateHandle: SavedStateHandle) : ViewMode
 
                 }
             }
+    }
+
+    fun addToReadingList(ctx: Context, book: GoodreadsBook?) {
+
+        if (book != null) {
+            val db = Database.getInstance(ctx)
+            //Set the owner
+            book.owner = ReadingListType.TO_BE_READ
+
+            db.goodreadsBookDao().addBook(book)
+        }
+
     }
 }
