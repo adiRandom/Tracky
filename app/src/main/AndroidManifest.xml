@@ -16,6 +16,7 @@
             android:name="android.test.runner"
             android:required="false" />
 
+        <!--            TODO: Make single-top-->
         <activity
             android:name="com.adi_random.tracky.ui.search.SearchActivity"
             android:parentActivityName="com.adi_random.tracky.ui.main.MainActivity">

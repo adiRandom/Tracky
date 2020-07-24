@@ -19,16 +19,16 @@ class ReadingListFragment : Fragment() {
         public const val EXTRA_TYPE = "extraType"
     }
 
-    private val viewModel: ReadingListViewModel by viewModels<ReadingListViewModel>()
+    private val viewModel: ReadingListViewModel by viewModels<ReadingListViewModel> {
+        val type = ReadingListType.getType(arguments?.getInt(EXTRA_TYPE) ?: 3)
+        ReadingListViewModelFactory(requireActivity().application, type)
+    }
     private lateinit var binding: ReadingListFragmentBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Init the type
-        viewModel.type = ReadingListType.getType(arguments?.getInt(EXTRA_TYPE) ?: 3)
-
-        viewModel.getReadingList().observe(this.viewLifecycleOwner) {
+        viewModel.readingList.observe(this) {
             val adapter = ReadingListAdapter(it)
             binding.readingListRecyclerView.swapAdapter(adapter, false)
         }
@@ -44,7 +44,7 @@ class ReadingListFragment : Fragment() {
         //Init the recycler view
 
         val layoutManager = LinearLayoutManager(activity)
-        val adapter = ReadingListAdapter(viewModel.getReadingList().value)
+        val adapter = ReadingListAdapter(viewModel.readingList.value)
         binding.readingListRecyclerView.apply {
             this.adapter = adapter
             this.layoutManager = layoutManager

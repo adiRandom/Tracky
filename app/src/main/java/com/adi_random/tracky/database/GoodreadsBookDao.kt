@@ -1,5 +1,6 @@
 package com.adi_random.tracky.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -13,7 +14,7 @@ import com.adi_random.tracky.ui.main.readingList.ReadingListType
 @Dao
 interface GoodreadsBookDao {
     @Query("SELECT * FROM GoodreadsBook WHERE owner = :type")
-    fun getReadingList(type: ReadingListType): List<GoodreadsBook>
+    fun getReadingList(type: ReadingListType): LiveData<List<GoodreadsBook>>
 
 
     @Insert

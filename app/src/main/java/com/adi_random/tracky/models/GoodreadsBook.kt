@@ -1,6 +1,7 @@
 package com.adi_random.tracky.models
 
 import android.os.Parcelable
+import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -9,6 +10,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class BestBook(
+    @ColumnInfo(name = "best_book_id")
     val id: Int,
     val title: String,
     @Embedded
@@ -27,9 +29,9 @@ data class GoodreadsBook(
     val average_rating: Float,
     @Embedded
     val best_book: BestBook,
-    var owner: ReadingListType
+    var owner: ReadingListType? = ReadingListType.UNSET
 ) : Parcelable
 
 
 @Parcelize
-data class Author(val id: Int, val name: String) : Parcelable
+data class Author(@ColumnInfo(name = "author_id") val id: Int, val name: String) : Parcelable

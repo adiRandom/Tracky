@@ -3,7 +3,9 @@ package com.adi_random.tracky.database
 import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.adi_random.tracky.models.GoodreadsBook
+import com.adi_random.tracky.ui.main.readingList.ReadingListTypeConverter
 
 /**
  * Created by Adrian Pascu on 23-Jul-20.
@@ -12,7 +14,12 @@ import com.adi_random.tracky.models.GoodreadsBook
 
 class Database {
 
-    @androidx.room.Database(entities = arrayOf(GoodreadsBook::class), version = 1)
+    @androidx.room.Database(
+        entities = arrayOf(GoodreadsBook::class),
+        version = 2,
+        exportSchema = false
+    )
+    @TypeConverters(ReadingListTypeConverter::class)
     abstract class _Database : RoomDatabase() {
         abstract fun goodreadsBookDao(): GoodreadsBookDao
     }
@@ -22,9 +29,12 @@ class Database {
         private lateinit var db: _Database;
         fun getInstance(ctx: Context): _Database {
             if (!this::db.isInitialized)
-                db = Room.databaseBuilder(ctx, _Database::class.java, "app-db").build()
+                db = Room.databaseBuilder(ctx, _Database::class.java, "app-db")
+                    .fallbackToDestructiveMigration().build()
             return db
         }
     }
 
 }
+
+

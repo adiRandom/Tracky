@@ -20,6 +20,7 @@
 
         <ImageView
             app:imageUrl="@{model.book.best_book.small_image_url}"
+            app:error="@{@drawable/ic_default_search_result}"
             android:id="@+id/search_result_icon"
             android:layout_width="@dimen/ic_search_result"
             android:layout_height="@dimen/ic_search_result"

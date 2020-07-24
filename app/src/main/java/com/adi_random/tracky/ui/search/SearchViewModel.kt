@@ -52,6 +52,8 @@ class SearchViewModel(private val savedStateHandle: SavedStateHandle) : ViewMode
                                 Array<GoodreadsBook>::class.java
                             );
 
+
+
                             searchResults.postValue(parsedRes)
                         }
 

@@ -9,7 +9,7 @@ import com.adi_random.tracky.models.GoodreadsBook
 /**
  * Created by Adrian Pascu on 13-Jul-20.
  */
-class ReadingListAdapter(private val dataset: Array<GoodreadsBook>?) :
+class ReadingListAdapter(private val dataset: List<GoodreadsBook>?) :
     RecyclerView.Adapter<ReadingListViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReadingListViewHolder {
         val inflater = LayoutInflater.from(parent.context)

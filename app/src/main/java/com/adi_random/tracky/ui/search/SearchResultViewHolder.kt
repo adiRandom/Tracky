@@ -1,5 +1,6 @@
 package com.adi_random.tracky.ui.search
 
+import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
@@ -20,9 +21,9 @@ class SearchResultViewHolder(private val binding: SearchResultBinding) :
 
     companion object {
         @JvmStatic
-        @BindingAdapter("imageUrl")
-        fun setImageUrl(view: View, imageUrl: String) {
-            Picasso.with(view.context).load(imageUrl).into(view as ImageView)
+        @BindingAdapter(value = ["imageUrl", "error"], requireAll = false)
+        fun setImageUrl(view: View, imageUrl: String?, error: Drawable?) {
+            Picasso.with(view.context).load(imageUrl).error(error).into(view as ImageView)
         }
     }
 

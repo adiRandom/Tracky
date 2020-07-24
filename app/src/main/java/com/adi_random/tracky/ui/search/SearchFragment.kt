@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adi_random.tracky.databinding.SearchFragmentBinding
 import com.adi_random.tracky.models.GoodreadsBook
+import com.adi_random.tracky.ui.main.search.SearchResultsListViewAdapter
 
 val QUERY_STATE_CODE = "query"
 
@@ -33,7 +34,8 @@ class SearchFragment : Fragment() {
         //Create observers
 
         val searchResultObserver = Observer<Array<GoodreadsBook>> {
-            searchResultListViewAdapter.setData(it)
+            val adapter = SearchResultsListViewAdapter(viewModel, requireContext())
+            binding.searchResultsRecyclerView.adapter = adapter
         }
         viewModel.getSearchResults().observe(this, searchResultObserver)
 
@@ -52,7 +54,7 @@ class SearchFragment : Fragment() {
 //        Init the recycler view
         val listViewManager = LinearLayoutManager(activity)
         val initialData = MutableLiveData<Array<GoodreadsBook>>(viewModel.getSearchResults().value)
-        searchResultListViewAdapter = SearchResultsListViewAdapter(initialData)
+        searchResultListViewAdapter = SearchResultsListViewAdapter(viewModel, requireContext())
 
         binding.searchResultsRecyclerView.apply {
             layoutManager = listViewManager;
