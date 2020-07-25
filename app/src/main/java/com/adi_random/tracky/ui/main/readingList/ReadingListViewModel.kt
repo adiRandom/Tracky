@@ -13,7 +13,8 @@ class ReadingListViewModel(app: Application, private val type: ReadingListType) 
     AndroidViewModel(app) {
 
     val readingList: LiveData<List<GoodreadsBook>> by lazy {
-        Database.getInstance(app.applicationContext).goodreadsBookDao().getReadingList(type)
+        Database.getInstance(app.applicationContext).goodreadsBookDao()
+            .getReadingListAsLiveData(type)
     }
 
 }

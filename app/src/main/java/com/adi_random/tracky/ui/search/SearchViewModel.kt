@@ -65,15 +65,20 @@ class SearchViewModel(private val savedStateHandle: SavedStateHandle) : ViewMode
             }
     }
 
-    fun addToReadingList(ctx: Context, book: GoodreadsBook?) {
+     fun addToReadingList(ctx: Context, book: GoodreadsBook?) {
 
-        if (book != null) {
-            val db = Database.getInstance(ctx)
-            //Set the owner
-            book.owner = ReadingListType.TO_BE_READ
+         if (book != null) {
+             val db = Database.getInstance(ctx)
+             //Set the owner
+             book.owner = ReadingListType.TO_BE_READ
 
-            db.goodreadsBookDao().addBook(book)
-        }
+             viewModelScope.launch {
+                 withContext(Dispatchers.IO) {
+                     db.goodreadsBookDao().addBook(book)
+                 }
+
+             }
+         }
 
     }
 }

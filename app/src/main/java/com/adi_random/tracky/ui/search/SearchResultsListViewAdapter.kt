@@ -30,6 +30,8 @@ class SearchResultsListViewAdapter(
     override fun onBindViewHolder(holder: SearchResultViewHolder, position: Int) {
         holder.update(viewModel.getSearchResults().value?.get(position)) {
             viewModel.addToReadingList(ctx, viewModel.getSearchResults().value?.get(position))
+
+
         }
     }
 

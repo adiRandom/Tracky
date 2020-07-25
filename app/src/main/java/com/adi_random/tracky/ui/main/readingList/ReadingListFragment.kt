@@ -45,6 +45,7 @@ class ReadingListFragment : Fragment() {
 
         val layoutManager = LinearLayoutManager(activity)
         val adapter = ReadingListAdapter(viewModel.readingList.value)
+        val _value = viewModel.readingList.value
         binding.readingListRecyclerView.apply {
             this.adapter = adapter
             this.layoutManager = layoutManager

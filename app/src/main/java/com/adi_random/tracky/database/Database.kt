@@ -27,6 +27,8 @@ class Database {
     companion object {
 
         private lateinit var db: _Database;
+
+        @JvmStatic
         fun getInstance(ctx: Context): _Database {
             if (!this::db.isInitialized)
                 db = Room.databaseBuilder(ctx, _Database::class.java, "app-db")
