@@ -76,4 +76,41 @@ class ReadingListTest {
         assertThat("Explicit size check", dbRes.size, `is`(1))
 
     }
+
+    @Test
+    fun prevendAddingTwiceToReadingList() {
+        val callback = object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val gson = Gson()
+
+                val res = gson.fromJson<Array<GoodreadsBook>>(
+                    response.body?.charStream(),
+                    Array<GoodreadsBook>
+                    ::class.java
+                )
+                res.forEach {
+                    it.canBeAddedToReadingList.postValue(true)
+                }
+
+                assertThat("Property init", res[0].canBeAddedToReadingList.value, `is`(true))
+
+                val viewModel: SearchViewModel =
+                    ViewModelProvider(activity.activity).get(SearchViewModel::class.java)
+
+                viewModel.addToReadingList(activity.activity.applicationContext, res[0])
+                Thread.sleep(1000)
+                val query1 = db.goodreadsBookDao().getBook(res[0].id)
+                val query2 = db.goodreadsBookDao().getBook(res[1].id)
+
+                assertThat("First query", query1?.id, `is`(res[0].id))
+                assertThat("Second query", query2, nullValue())
+            }
+        }
+        GlobalScope.launch { searchBook("Dune", callback) }
+        Thread.sleep(4000)
+    }
 }

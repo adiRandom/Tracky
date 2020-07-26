@@ -25,6 +25,9 @@ interface GoodreadsBookDao {
 
     @Query("DELETE FROM GoodreadsBook")
     fun deleteAll()
+
+    @Query("SELECT * FROM GoodreadsBook WHERE id = :id")
+    fun getBook(id: Int): GoodreadsBook?
 }
 
 

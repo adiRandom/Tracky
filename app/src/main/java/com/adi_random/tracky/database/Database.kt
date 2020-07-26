@@ -16,7 +16,7 @@ class Database {
 
     @androidx.room.Database(
         entities = arrayOf(GoodreadsBook::class),
-        version = 2,
+        version = 4,
         exportSchema = false
     )
     @TypeConverters(ReadingListTypeConverter::class)

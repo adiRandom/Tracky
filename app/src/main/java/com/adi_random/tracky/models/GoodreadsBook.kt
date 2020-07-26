@@ -1,10 +1,8 @@
 package com.adi_random.tracky.models
 
 import android.os.Parcelable
-import androidx.room.ColumnInfo
-import androidx.room.Embedded
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.databinding.ObservableBoolean
+import androidx.room.*
 import com.adi_random.tracky.ui.main.readingList.ReadingListType
 import kotlinx.android.parcel.Parcelize
 
@@ -30,7 +28,32 @@ data class GoodreadsBook(
     @Embedded
     val best_book: BestBook,
     var owner: ReadingListType? = ReadingListType.UNSET
-) : Parcelable
+) : Parcelable {
+    constructor(
+        id: Int,
+        original_publication_year: Int,
+        original_publication_month: Int,
+        original_publication_day: Int,
+        average_rating: Float,
+        best_book: BestBook,
+        owner: ReadingListType? = ReadingListType.UNSET, canBeAddedToReadingList: Boolean
+    ) : this(
+        id,
+        original_publication_year,
+        original_publication_month,
+        original_publication_day,
+        average_rating,
+        best_book,
+        owner
+    ) {
+
+        this.canBeAddedToReadingList.set(canBeAddedToReadingList)
+    }
+
+    @Ignore
+    var canBeAddedToReadingList: ObservableBoolean = ObservableBoolean(true)
+
+}
 
 
 @Parcelize

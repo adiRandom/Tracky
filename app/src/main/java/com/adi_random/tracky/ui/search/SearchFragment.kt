@@ -41,7 +41,7 @@ class SearchFragment : Fragment() {
 
 
         //Perform the search
-        viewModel.search(query)
+        viewModel.search(query, requireContext())
 
     }
 

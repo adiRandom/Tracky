@@ -1,10 +1,10 @@
 package com.adi_random.tracky.ui.search
 
 import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
+import androidx.databinding.Observable
 import androidx.recyclerview.widget.RecyclerView
 import com.adi_random.tracky.databinding.SearchResultBinding
 import com.adi_random.tracky.models.GoodreadsBook
@@ -17,6 +17,16 @@ class SearchResultViewHolder(private val binding: SearchResultBinding) :
     RecyclerView.ViewHolder(binding.root) {
     public fun update(book: GoodreadsBook?, onAdd: () -> Unit) {
         binding.model = SearchResultViewHolderViewModel(book, onAdd);
+
+        //Subscribe to the model observable
+        if (binding.model?.book?.canBeAddedToReadingList != null)
+            binding?.model?.book?.canBeAddedToReadingList?.addOnPropertyChangedCallback(object :
+                Observable.OnPropertyChangedCallback() {
+                override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+                    binding.executePendingBindings()
+                }
+
+            })
         binding.executePendingBindings();
     }
 
@@ -24,14 +34,13 @@ class SearchResultViewHolder(private val binding: SearchResultBinding) :
         @JvmStatic
         @BindingAdapter(value = ["imageUrl", "error"], requireAll = true)
         fun setImageUrl(view: View, imageUrl: String?, error: Drawable?) {
-            Log.d("Error-image", error.toString())
             Picasso.with(view.context).load(imageUrl).error(error).into(view as ImageView)
         }
     }
 
 }
 
-class SearchResultViewHolderViewModel(val book: GoodreadsBook?, val _onAdd: () -> Unit) {
+class SearchResultViewHolderViewModel(var book: GoodreadsBook?, val _onAdd: () -> Unit) {
     fun onAdd() {
         _onAdd()
     }

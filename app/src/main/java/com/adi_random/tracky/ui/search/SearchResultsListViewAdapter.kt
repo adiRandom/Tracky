@@ -31,7 +31,6 @@ class SearchResultsListViewAdapter(
         holder.update(viewModel.getSearchResults().value?.get(position)) {
             viewModel.addToReadingList(ctx, viewModel.getSearchResults().value?.get(position))
 
-
         }
     }
 
