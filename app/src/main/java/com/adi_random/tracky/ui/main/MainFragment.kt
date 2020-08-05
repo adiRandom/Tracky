@@ -36,6 +36,7 @@ class MainFragment : Fragment() {
         viewPagerAdapter = ViewPagerAdapter(this)
         viewPager2 = binding.viewPager
         viewPager2.adapter = viewPagerAdapter
+        viewPager2.isUserInputEnabled = false
 
         //init the tab layout
 
