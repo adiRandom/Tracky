@@ -24,13 +24,15 @@ class ReadingListFragment : Fragment() {
         ReadingListViewModelFactory(requireActivity().application, type)
     }
     private lateinit var binding: ReadingListFragmentBinding
+    private lateinit var readingListAdapter: ReadingListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         viewModel.readingList.observe(this) {
-            val adapter = ReadingListAdapter(it)
-            binding.readingListRecyclerView.swapAdapter(adapter, false)
+            val adapter = ReadingListAdapter(viewModel)
+//            binding.readingListRecyclerView.swapAdapter(adapter, false)
+            this.readingListAdapter.changeData(viewModel)
         }
     }
 
@@ -44,10 +46,10 @@ class ReadingListFragment : Fragment() {
         //Init the recycler view
 
         val layoutManager = LinearLayoutManager(activity)
-        val adapter = ReadingListAdapter(viewModel.readingList.value)
-        val _value = viewModel.readingList.value
+        this.readingListAdapter = ReadingListAdapter(viewModel)
         binding.readingListRecyclerView.apply {
-            this.adapter = adapter
+            val value = viewModel.readingList.value
+            adapter = readingListAdapter
             this.layoutManager = layoutManager
         }
 
@@ -56,6 +58,11 @@ class ReadingListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+    }
+
+    override fun onResume() {
+        super.onResume()
 
     }
 

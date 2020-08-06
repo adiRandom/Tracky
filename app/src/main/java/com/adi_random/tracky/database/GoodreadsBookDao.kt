@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import com.adi_random.tracky.models.GoodreadsBook
 import com.adi_random.tracky.ui.main.readingList.ReadingListType
 
@@ -28,6 +29,9 @@ interface GoodreadsBookDao {
 
     @Query("SELECT * FROM GoodreadsBook WHERE id = :id")
     fun getBook(id: Int): GoodreadsBook?
+
+    @Update
+    fun updateBook(book: GoodreadsBook)
 }
 
 

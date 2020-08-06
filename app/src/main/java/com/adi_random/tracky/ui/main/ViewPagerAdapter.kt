@@ -11,11 +11,12 @@ import com.adi_random.tracky.ui.main.readingList.ReadingListFragment
 class ViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int = 3
 
-    override fun createFragment(position: Int): Fragment {
-        val fragment = ReadingListFragment()
-        fragment.arguments = Bundle().apply {
-            putInt(ReadingListFragment.EXTRA_TYPE, position)
-        }
-        return fragment
+//    TODO: Create a separate fragment for the DONE list
+override fun createFragment(position: Int): Fragment {
+    val fragment = ReadingListFragment()
+    fragment.arguments = Bundle().apply {
+        putInt(ReadingListFragment.EXTRA_TYPE, position)
     }
+    return fragment
+}
 }
