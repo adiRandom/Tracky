@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adi_random.tracky.databinding.SearchFragmentBinding
@@ -24,12 +23,12 @@ class SearchFragment : Fragment() {
 
     private val viewModel: SearchViewModel by viewModels()
     private lateinit var binding: SearchFragmentBinding
-    private lateinit var searchResultListViewAdapter: SearchResultsListViewAdapter;
+    private lateinit var searchResultListViewAdapter: SearchResultsListViewAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val query = arguments?.getString(Intent.ACTION_SEARCH);
+        val query = arguments?.getString(Intent.ACTION_SEARCH)
 
         //Create observers
 
@@ -41,7 +40,8 @@ class SearchFragment : Fragment() {
 
 
         //Perform the search
-        viewModel.search(query, requireContext())
+//        TODO: Remove hard coded page
+        viewModel.search(query, 1, requireContext())
 
     }
 
@@ -53,19 +53,14 @@ class SearchFragment : Fragment() {
 
 //        Init the recycler view
         val listViewManager = LinearLayoutManager(activity)
-        val initialData = MutableLiveData<Array<GoodreadsBook>>(viewModel.getSearchResults().value)
         searchResultListViewAdapter = SearchResultsListViewAdapter(viewModel, requireContext())
 
         binding.searchResultsRecyclerView.apply {
-            layoutManager = listViewManager;
+            layoutManager = listViewManager
             adapter = searchResultListViewAdapter
         }
 
-        return binding.root;
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+        return binding.root
     }
 
 
