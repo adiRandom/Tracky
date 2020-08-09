@@ -3,8 +3,10 @@ package com.adi_random.tracky.ui.main.search
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import com.adi_random.tracky.databinding.SearchResultBinding
+import com.adi_random.tracky.models.GoodreadsBook
 import com.adi_random.tracky.ui.search.SearchResultViewHolder
 import com.adi_random.tracky.ui.search.SearchViewModel
 
@@ -13,26 +15,23 @@ import com.adi_random.tracky.ui.search.SearchViewModel
  */
 class SearchResultsListViewAdapter(
     private val viewModel: SearchViewModel,
-    private val ctx: Context
+    private val ctx: Context,
+    differCallback: DiffUtil.ItemCallback<GoodreadsBook>
 ) :
-    RecyclerView.Adapter<SearchResultViewHolder>() {
+    PagingDataAdapter<GoodreadsBook, SearchResultViewHolder>(differCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultViewHolder {
-        val inflater = LayoutInflater.from(parent.context);
+        val inflater = LayoutInflater.from(parent.context)
         val binding = SearchResultBinding.inflate(inflater, parent, false)
-        return SearchResultViewHolder(binding);
+        return SearchResultViewHolder(binding)
     }
 
-    override fun getItemCount(): Int {
-        return viewModel.getSearchResults().value?.size ?: 0;
-    }
 
     override fun onBindViewHolder(holder: SearchResultViewHolder, position: Int) {
-        holder.update(viewModel.getSearchResults().value?.get(position)) {
-            viewModel.addToReadingList(ctx, viewModel.getSearchResults().value?.get(position))
-
+        val item = getItem(position)
+        holder.update(item) {
+            viewModel.addToReadingList(ctx, item)
         }
     }
-
 
 }

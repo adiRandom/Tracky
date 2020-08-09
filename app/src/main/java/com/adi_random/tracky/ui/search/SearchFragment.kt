@@ -8,9 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adi_random.tracky.databinding.SearchFragmentBinding
 import com.adi_random.tracky.models.GoodreadsBook
+import com.adi_random.tracky.models.GoodreadsBookComparator
 import com.adi_random.tracky.ui.main.search.SearchResultsListViewAdapter
 
 val QUERY_STATE_CODE = "query"
@@ -28,20 +30,7 @@ class SearchFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val query = arguments?.getString(Intent.ACTION_SEARCH)
-
-        //Create observers
-
-        val searchResultObserver = Observer<Array<GoodreadsBook>> {
-            val adapter = SearchResultsListViewAdapter(viewModel, requireContext())
-            binding.searchResultsRecyclerView.adapter = adapter
-        }
-        viewModel.getSearchResults().observe(this, searchResultObserver)
-
-
-        //Perform the search
-//        TODO: Remove hard coded page
-        viewModel.search(query, 1, requireContext())
+        viewModel.query = requireArguments().getString(Intent.ACTION_SEARCH)!!
 
     }
 
@@ -51,14 +40,22 @@ class SearchFragment : Fragment() {
     ): View {
         binding = SearchFragmentBinding.inflate(inflater, container, false)
 
-//        Init the recycler view
-        val listViewManager = LinearLayoutManager(activity)
-        searchResultListViewAdapter = SearchResultsListViewAdapter(viewModel, requireContext())
+        //Init the RecyclerView
 
-        binding.searchResultsRecyclerView.apply {
-            layoutManager = listViewManager
-            adapter = searchResultListViewAdapter
+        searchResultListViewAdapter =
+            SearchResultsListViewAdapter(viewModel, requireContext(), GoodreadsBookComparator)
+        val recyclerView = binding.searchResultsRecyclerView
+        val listViewManager = LinearLayoutManager(activity)
+        recyclerView.adapter = searchResultListViewAdapter
+        recyclerView.layoutManager = listViewManager
+
+        //Observe paging data
+
+        val searchResultObserver = Observer<PagingData<GoodreadsBook>> {
+            searchResultListViewAdapter.submitData(lifecycle, it)
         }
+        viewModel.searchResults.observe(this.requireActivity(), searchResultObserver)
+
 
         return binding.root
     }

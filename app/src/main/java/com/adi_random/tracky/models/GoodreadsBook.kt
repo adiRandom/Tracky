@@ -2,6 +2,7 @@ package com.adi_random.tracky.models
 
 import android.os.Parcelable
 import androidx.databinding.ObservableBoolean
+import androidx.recyclerview.widget.DiffUtil
 import androidx.room.*
 import com.adi_random.tracky.ui.main.readingList.ReadingListType
 import kotlinx.android.parcel.Parcelize
@@ -51,6 +52,7 @@ data class GoodreadsBook(
     }
 
     @Ignore
+//    TODO: Check the warning
     var canBeAddedToReadingList: ObservableBoolean = ObservableBoolean(true)
 
 }
@@ -58,3 +60,15 @@ data class GoodreadsBook(
 
 @Parcelize
 data class Author(@ColumnInfo(name = "author_id") val id: Int, val name: String) : Parcelable
+
+
+object GoodreadsBookComparator : DiffUtil.ItemCallback<GoodreadsBook>() {
+    override fun areItemsTheSame(oldItem: GoodreadsBook, newItem: GoodreadsBook): Boolean {
+        return oldItem.id == newItem.id
+    }
+
+    override fun areContentsTheSame(oldItem: GoodreadsBook, newItem: GoodreadsBook): Boolean {
+        return oldItem.id == newItem.id
+    }
+
+}

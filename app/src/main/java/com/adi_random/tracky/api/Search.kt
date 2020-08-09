@@ -14,7 +14,7 @@ import retrofit2.http.Query
 
 interface SearchApi {
     @GET("searchBook")
-    suspend fun searchBook(
+    fun searchBook(
         @Query("q") query: String?,
         @Query("page") page: Int
     ): Call<List<GoodreadsBook>>
