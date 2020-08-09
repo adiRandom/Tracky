@@ -1,6 +1,7 @@
 package com.adi_random.tracky.api
 
 import com.adi_random.tracky.models.GoodreadsBook
+import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -16,7 +17,7 @@ interface SearchApi {
     suspend fun searchBook(
         @Query("q") query: String?,
         @Query("page") page: Int
-    ): List<GoodreadsBook>
+    ): Call<List<GoodreadsBook>>
 
     companion object {
         fun create(): SearchApi {

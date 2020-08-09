@@ -34,24 +34,38 @@ class SearchViewModel(private val savedStateHandle: SavedStateHandle) : ViewMode
             viewModelScope.launch {
                 val api = SearchApi.create()
 
-                //TODO: Handle errors and check res status
-                val res = api.searchBook(query, page)
-                res.forEach {
-                    it.canBeAddedToReadingList = ObservableBoolean(true)
-                }
-                val db = Database.getInstance(ctx)
+                try {
+                    val res = api.searchBook(query, page).execute()
+                    if (res.code() == 200) {
+                        val data = res.body()
+                        if (data != null) {
+                            data.forEach {
+                                it.canBeAddedToReadingList = ObservableBoolean(true)
+                            }
+                            val db = Database.getInstance(ctx)
 //                            Check if the book can be added to a reading list and post the search results to the viewModel
-                for (book: GoodreadsBook in res) {
-                    withContext(Dispatchers.IO) {
-                        val dbRes = db.goodreadsBookDao().getBook(book.id)
-                        if (dbRes != null)
-                            book.canBeAddedToReadingList.set(true)
+                            for (book: GoodreadsBook in data) {
+                                addToDb(book, db)
+                                searchResults.postValue(data.toTypedArray())
+                            }
+                        }
+                    } else {
+//                    TODO: Display error message
+//                    TODO: Check if code 500 ends here or in catch block
                     }
-                    searchResults.postValue(res.toTypedArray())
+                } catch (e: Error) {
+//                    TODO: Display error message
                 }
             }
         }
     }
+
+    private suspend fun addToDb(book: GoodreadsBook, db: Database._Database) =
+        withContext(Dispatchers.IO) {
+            val dbRes = db.goodreadsBookDao().getBook(book.id)
+            if (dbRes != null)
+                book.canBeAddedToReadingList.set(true)
+        }
 
 
     fun addToReadingList(ctx: Context, book: GoodreadsBook?) {
