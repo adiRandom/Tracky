@@ -17,6 +17,7 @@ import com.adi_random.tracky.ui.main.readingList.ReadingListType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.*
 
 class SearchViewModel(
     private val app: Application
@@ -36,8 +37,9 @@ class SearchViewModel(
 
         if (book != null) {
             val db = Database.getInstance(ctx)
-            //Set the owner
+            //Set the owner and date
             book.owner = ReadingListType.TO_BE_READ
+            book.addedAt = Date()
             book.canBeAddedToReadingList.set(false)
 
             viewModelScope.launch {

@@ -5,13 +5,13 @@ import android.os.Parcelable
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import androidx.room.TypeConverter
 import com.adi_random.tracky.database.Database
 import com.adi_random.tracky.models.GoodreadsBook
 import kotlinx.android.parcel.Parcelize
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.*
 
 class ReadingListViewModel(private val app: Application, private val type: ReadingListType) :
     AndroidViewModel(app) {
@@ -36,6 +36,7 @@ class ReadingListViewModel(private val app: Application, private val type: Readi
         if (item?.owner != null) {
             val newOwner = ReadingListType.getType(item.owner!!.value + 1)
             item.owner = newOwner
+            item.addedAt = Date()
 
 
             //Update the item in the database
@@ -61,10 +62,3 @@ enum class ReadingListType(val value: Int) : Parcelable {
     }
 }
 
-class ReadingListTypeConverter {
-    @TypeConverter
-    fun fromReadingListTypeToInt(it: ReadingListType) = it.value
-
-    @TypeConverter
-    fun fromIntToReadingListType(it: Int) = ReadingListType.getType(it)
-}

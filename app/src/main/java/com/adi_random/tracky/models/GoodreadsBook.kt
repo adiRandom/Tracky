@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.room.*
 import com.adi_random.tracky.ui.main.readingList.ReadingListType
 import kotlinx.android.parcel.Parcelize
+import java.util.*
 
 @Parcelize
 data class BestBook(
@@ -28,7 +29,8 @@ data class GoodreadsBook(
     val average_rating: Float,
     @Embedded
     val best_book: BestBook,
-    var owner: ReadingListType? = ReadingListType.UNSET
+    var owner: ReadingListType? = ReadingListType.UNSET,
+    var addedAt: Date?
 ) : Parcelable {
     constructor(
         id: Int,
@@ -37,7 +39,8 @@ data class GoodreadsBook(
         original_publication_day: Int,
         average_rating: Float,
         best_book: BestBook,
-        owner: ReadingListType? = ReadingListType.UNSET, canBeAddedToReadingList: Boolean
+        owner: ReadingListType? = ReadingListType.UNSET, canBeAddedToReadingList: Boolean,
+        addedAt: Date?
     ) : this(
         id,
         original_publication_year,
@@ -45,7 +48,8 @@ data class GoodreadsBook(
         original_publication_day,
         average_rating,
         best_book,
-        owner
+        owner,
+        addedAt
     ) {
 
         this.canBeAddedToReadingList.set(canBeAddedToReadingList)
@@ -71,4 +75,18 @@ object GoodreadsBookComparator : DiffUtil.ItemCallback<GoodreadsBook>() {
         return oldItem.id == newItem.id
     }
 
+}
+
+class GoodreadsBookTypeConverter {
+    @TypeConverter
+    fun fromReadingListTypeToInt(it: ReadingListType) = it.value
+
+    @TypeConverter
+    fun fromIntToReadingListType(it: Int) = ReadingListType.getType(it)
+
+    @TypeConverter
+    fun fromDateToLong(it: Date) = it.time
+
+    @TypeConverter
+    fun fromLongToDate(it: Long) = Date(it)
 }

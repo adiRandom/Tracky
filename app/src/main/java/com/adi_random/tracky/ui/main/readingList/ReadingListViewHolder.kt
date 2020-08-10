@@ -3,6 +3,7 @@ package com.adi_random.tracky.ui.main.readingList
 import android.util.Log
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.adi_random.tracky.R
 import com.adi_random.tracky.databinding.ReadingListItemBinding
 import com.adi_random.tracky.models.GoodreadsBook
 
@@ -33,6 +34,10 @@ class ReadingListViewHolder(
             }
 
             override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) {
+                //Add border
+                if (p3 > 0) {
+                    binding.readingListItemMotion.setBackgroundResource(R.drawable.item_border)
+                }
             }
 
             override fun onTransitionCompleted(p0: MotionLayout?, p1: Int) {
@@ -48,6 +53,9 @@ class ReadingListViewHolder(
 //
 //                }
                     moveBookToNextList(adapterPosition)
+                } else {
+//                    Remove the border
+                    binding.readingListItemMotion.setBackgroundColor(0x00ffffff)
                 }
 
             }
