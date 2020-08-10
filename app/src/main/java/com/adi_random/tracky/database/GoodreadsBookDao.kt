@@ -14,10 +14,10 @@ import com.adi_random.tracky.ui.main.readingList.ReadingListType
 
 @Dao
 interface GoodreadsBookDao {
-    @Query("SELECT * FROM GoodreadsBook WHERE owner = :type")
+    @Query("SELECT * FROM GoodreadsBook WHERE owner = :type ORDER BY addedAt")
     fun getReadingListAsLiveData(type: ReadingListType): LiveData<List<GoodreadsBook>>
 
-    @Query("SELECT * FROM GoodreadsBook WHERE owner = :type")
+    @Query("SELECT * FROM GoodreadsBook WHERE owner = :type ORDER BY addedAt")
     fun getReadingList(type: ReadingListType): List<GoodreadsBook>
 
 
