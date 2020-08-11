@@ -15,7 +15,8 @@ import com.squareup.picasso.Picasso
  */
 class SearchResultViewHolder(private val binding: SearchResultBinding) :
     RecyclerView.ViewHolder(binding.root) {
-    public fun update(book: GoodreadsBook?, onAdd: () -> Unit) {
+
+    public fun update(book: GoodreadsBook?, buttonIcon: Int, onAdd: () -> Unit) {
         binding.model = SearchResultViewHolderViewModel(book, onAdd);
 
         //Subscribe to the model observable
@@ -28,6 +29,10 @@ class SearchResultViewHolder(private val binding: SearchResultBinding) :
 
             })
         binding.executePendingBindings();
+
+        //Set the add button icon
+
+        binding.searchResultAdd.setImageResource(buttonIcon)
     }
 
     companion object {
@@ -40,7 +45,10 @@ class SearchResultViewHolder(private val binding: SearchResultBinding) :
 
 }
 
-class SearchResultViewHolderViewModel(var book: GoodreadsBook?, val _onAdd: () -> Unit) {
+class SearchResultViewHolderViewModel(
+    var book: GoodreadsBook?,
+    val _onAdd: () -> Unit
+) {
     fun onAdd() {
         _onAdd()
     }

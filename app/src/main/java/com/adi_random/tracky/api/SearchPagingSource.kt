@@ -50,6 +50,8 @@ class SearchPagingSource(
 private suspend fun lookupDbForAddingToReadingList(book: GoodreadsBook, db: Database.AppDatabase) =
     withContext(Dispatchers.IO) {
         val dbRes = db.goodreadsBookDao().getBook(book.id)
-        if (dbRes != null)
+        if (dbRes != null) {
             book.canBeAddedToReadingList.set(false)
+            book.owner = dbRes.owner
+        }
     }

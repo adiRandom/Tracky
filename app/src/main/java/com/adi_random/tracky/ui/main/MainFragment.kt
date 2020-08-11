@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
+import com.adi_random.tracky.R
 import com.adi_random.tracky.databinding.FragmentMainBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -43,6 +44,7 @@ class MainFragment : Fragment() {
         binding.tabLayout.apply {
             TabLayoutMediator(this, viewPager2) { tab, position ->
                 tab.text = TAB_LAYOUT_LABELS[position]
+                tab.setIcon(TAB_LAYOUT_ICONS[position])
             }.attach()
         }
 
@@ -52,5 +54,10 @@ class MainFragment : Fragment() {
         @JvmStatic
         fun newInstance() = MainFragment()
         private val TAB_LAYOUT_LABELS = arrayOf("TO BE READ", "READING", "DONE")
+        private val TAB_LAYOUT_ICONS = arrayOf(
+            R.drawable.ic_to_be_read_book,
+            R.drawable.ic_reading_book_24,
+            R.drawable.ic_baseline_done_24
+        )
     }
 }
