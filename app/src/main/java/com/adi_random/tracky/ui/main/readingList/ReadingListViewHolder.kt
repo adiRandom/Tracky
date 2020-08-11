@@ -1,8 +1,8 @@
 package com.adi_random.tracky.ui.main.readingList
 
-import android.util.Log
+import android.view.View
 import androidx.constraintlayout.motion.widget.MotionLayout
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.adi_random.tracky.R
 import com.adi_random.tracky.databinding.ReadingListItemBinding
 import com.adi_random.tracky.models.GoodreadsBook
@@ -10,14 +10,20 @@ import com.adi_random.tracky.models.GoodreadsBook
 /**
  * Created by Adrian Pascu on 13-Jul-20.
  */
+
+abstract class AbstractReadingListViewHolder(root: View) : ViewHolder(root) {
+    abstract fun bind(newData: GoodreadsBook?)
+}
+
+
 //TODO: Add actions based on ReadingListType
 class ReadingListViewHolder(
     private var binding: ReadingListItemBinding,
     private val moveBookToNextList: (pos: Int) -> Unit
 ) :
-    RecyclerView.ViewHolder(binding.root) {
+    AbstractReadingListViewHolder(binding.root) {
 
-    private var animationEndId: Int = 0;
+    private var animationEndId: Int = 0
 
     init {
 //        Add the move and dismiss animation
@@ -52,7 +58,7 @@ class ReadingListViewHolder(
 //                    //Move the item from this list to the next
 //
 //                }
-                    moveBookToNextList(adapterPosition)
+                    moveBookToNextList(bindingAdapterPosition)
                 } else {
 //                    Remove the border
                     binding.readingListItemMotion.setBackgroundColor(0x00ffffff)
@@ -62,9 +68,8 @@ class ReadingListViewHolder(
         })
     }
 
-    fun bind(newData: GoodreadsBook?) {
-        Log.d("Binding", "Binding an element")
-        binding.book = newData;
+    override fun bind(newData: GoodreadsBook?) {
+        binding.book = newData
         binding.executePendingBindings()
     }
 

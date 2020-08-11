@@ -13,13 +13,17 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
 
-class ReadingListViewModel(private val app: Application, private val type: ReadingListType) :
+class ReadingListViewModel(
+    private val app: Application,
+    val readingListType: ReadingListType
+) :
     AndroidViewModel(app) {
 
     val readingList: LiveData<List<GoodreadsBook>> by lazy {
         Database.getInstance(app.applicationContext).goodreadsBookDao()
-            .getReadingListAsLiveData(type)
+            .getReadingListAsLiveData(readingListType)
     }
+
 
 //    fun removeitem(pos: Int) {
 //        val filteredList = readingList.value?.filterIndexed() { _pos, _ -> _pos != pos }

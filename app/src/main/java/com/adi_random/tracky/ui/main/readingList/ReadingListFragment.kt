@@ -1,7 +1,6 @@
 package com.adi_random.tracky.ui.main.readingList
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +16,7 @@ class ReadingListFragment : Fragment() {
         fun newInstance() =
             ReadingListFragment()
 
-        public const val EXTRA_TYPE = "extraType"
+        const val EXTRA_TYPE = "extraType"
     }
 
     private val viewModel: ReadingListViewModel by viewModels<ReadingListViewModel> {
@@ -31,9 +30,6 @@ class ReadingListFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         viewModel.readingList.observe(this) {
-            val adapter = ReadingListAdapter(viewModel)
-            Log.d("Items", it.size.toString())
-//            binding.readingListRecyclerView.swapAdapter(adapter, false)
             this.readingListAdapter.changeData(viewModel)
         }
     }
@@ -49,23 +45,12 @@ class ReadingListFragment : Fragment() {
 
         val layoutManager = LinearLayoutManager(activity)
         this.readingListAdapter = ReadingListAdapter(viewModel)
-        binding.readingListRecyclerView.apply {
-            val value = viewModel.readingList.value
+        this.binding.readingListRecyclerView.apply {
             adapter = readingListAdapter
             this.layoutManager = layoutManager
         }
 
         return binding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-
     }
 
 }
