@@ -8,7 +8,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-//TODO: Change to RemoteMEdaitor
 class SearchPagingSource(
     private val query: String,
     private val api: SearchApi,
@@ -17,7 +16,6 @@ class SearchPagingSource(
     PagingSource<Int, GoodreadsBook>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, GoodreadsBook> =
         withContext(Dispatchers.IO) {
-//        TODO: Test initial value. API expects paging from 1
             val page = params.key ?: 1
             try {
                 val res = api.searchBook(query, page).execute()
@@ -31,8 +29,6 @@ class SearchPagingSource(
                         launch {
                             for (book: GoodreadsBook in data) {
                                 lookupDbForAddingToReadingList(book, db)
-//                        TODO:Update viewmodel
-//                        searchResults.postValue(data.toTypedArray())
                             }
                         }.join()
                         LoadResult.Page(data, null, page + 1)
@@ -55,5 +51,5 @@ private suspend fun lookupDbForAddingToReadingList(book: GoodreadsBook, db: Data
     withContext(Dispatchers.IO) {
         val dbRes = db.goodreadsBookDao().getBook(book.id)
         if (dbRes != null)
-            book.canBeAddedToReadingList.set(true)
+            book.canBeAddedToReadingList.set(false)
     }

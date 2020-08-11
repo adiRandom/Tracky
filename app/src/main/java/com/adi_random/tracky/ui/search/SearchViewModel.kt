@@ -35,7 +35,7 @@ class SearchViewModel(
 
     fun addToReadingList(ctx: Context, book: GoodreadsBook?) {
 
-        if (book != null) {
+        if (book != null && book.canBeAddedToReadingList.get()) {
             val db = Database.getInstance(ctx)
             //Set the owner and date
             book.owner = ReadingListType.TO_BE_READ

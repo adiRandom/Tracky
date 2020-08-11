@@ -1,6 +1,7 @@
 package com.adi_random.tracky.ui.main.readingList
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +32,7 @@ class ReadingListFragment : Fragment() {
 
         viewModel.readingList.observe(this) {
             val adapter = ReadingListAdapter(viewModel)
+            Log.d("Items", it.size.toString())
 //            binding.readingListRecyclerView.swapAdapter(adapter, false)
             this.readingListAdapter.changeData(viewModel)
         }
