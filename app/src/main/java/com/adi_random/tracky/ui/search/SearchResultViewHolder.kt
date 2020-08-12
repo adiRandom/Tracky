@@ -6,6 +6,7 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.Observable
 import androidx.recyclerview.widget.RecyclerView
+import com.adi_random.tracky.R
 import com.adi_random.tracky.databinding.SearchResultBinding
 import com.adi_random.tracky.models.GoodreadsBook
 import com.squareup.picasso.Picasso
@@ -17,7 +18,7 @@ class SearchResultViewHolder(private val binding: SearchResultBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     public fun update(book: GoodreadsBook?, buttonIcon: Int, onAdd: () -> Unit) {
-        binding.model = SearchResultViewHolderViewModel(book, onAdd);
+        binding.model = SearchResultViewHolderViewModel(book, onAdd, binding);
 
         //Subscribe to the model observable
         if (binding.model?.book?.canBeAddedToReadingList != null)
@@ -28,11 +29,10 @@ class SearchResultViewHolder(private val binding: SearchResultBinding) :
                 }
 
             })
+        //Set the add button icon
+        binding.searchResultAdd.setImageResource(buttonIcon)
         binding.executePendingBindings();
 
-        //Set the add button icon
-
-        binding.searchResultAdd.setImageResource(buttonIcon)
     }
 
     companion object {
@@ -47,9 +47,12 @@ class SearchResultViewHolder(private val binding: SearchResultBinding) :
 
 class SearchResultViewHolderViewModel(
     var book: GoodreadsBook?,
-    val _onAdd: () -> Unit
+    val _onAdd: () -> Unit,
+    val binding: SearchResultBinding
 ) {
     fun onAdd() {
         _onAdd()
+        binding.searchResultAdd.setImageResource(R.drawable.ic_to_be_read_book)
+        binding.executePendingBindings()
     }
 }
