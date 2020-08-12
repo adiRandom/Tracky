@@ -9,6 +9,7 @@ import com.adi_random.tracky.database.Database
 import com.adi_random.tracky.models.GoodreadsBook
 import kotlinx.android.parcel.Parcelize
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
@@ -33,26 +34,28 @@ class ReadingListViewModel(
 
     //    Move item to the next list
     fun moveToTheNextList(pos: Int) {
+        viewModelScope.launch {
+            delay(500)
 
-        val item = readingList.value?.get(pos)
+            val item = readingList.value?.get(pos)
 
-        //Update the item in memory
-        if (item?.owner != null) {
-            val newOwner = ReadingListType.getType(item.owner!!.value + 1)
-            item.owner = newOwner
-            item.addedAt = Date()
-
-
-            //Update the item in the database
+            //Update the item in memory
+            if (item?.owner != null) {
+                val newOwner = ReadingListType.getType(item.owner!!.value + 1)
+                item.owner = newOwner
+                item.addedAt = Date()
 
 
-            viewModelScope.launch {
+                //Update the item in the database
+
+
                 withContext(Dispatchers.IO) {
                     val db = Database.getInstance(app.applicationContext)
                     db.goodreadsBookDao().updateBook(item)
                 }
             }
         }
+
     }
 
 }

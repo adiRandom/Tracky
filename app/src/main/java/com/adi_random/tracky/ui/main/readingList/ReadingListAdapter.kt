@@ -16,7 +16,7 @@ class ReadingListAdapter(
 ) :
     RecyclerView.Adapter<AbstractReadingListViewHolder>() {
 
-    private var dataset = viewModel.readingList.value
+    private var dataset = viewModel.readingList.value?.toMutableList()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -30,6 +30,7 @@ class ReadingListAdapter(
         } else {
             val binding = ReadingListItemBinding.inflate(inflater, parent, false)
             ReadingListViewHolder(binding, this.parent as FreezableRecyclerView) {
+                removeItem(it)
                 viewModel.moveToTheNextList(it)
             }
         }
@@ -37,8 +38,14 @@ class ReadingListAdapter(
 
     fun changeData(newData: ReadingListViewModel) {
         viewModel = newData
-        this.dataset = newData.readingList.value
+        this.dataset = newData.readingList.value?.toMutableList()
         notifyDataSetChanged()
+    }
+
+
+    private fun removeItem(pos: Int) {
+        dataset?.removeAt(pos)
+        notifyItemRemoved(pos)
     }
 
     override fun getItemCount(): Int = dataset?.size ?: 0
