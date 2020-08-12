@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.adi_random.tracky.R
 import com.adi_random.tracky.databinding.FragmentMainBinding
-import com.google.android.material.tabs.TabLayoutMediator
 
 
 /**
@@ -39,14 +38,41 @@ class MainFragment : Fragment() {
         viewPager2.adapter = viewPagerAdapter
         viewPager2.isUserInputEnabled = false
 
-        //init the tab layout
+        //Link viewpager and bottom navigation
 
-        binding.tabLayout.apply {
-            TabLayoutMediator(this, viewPager2) { tab, position ->
-                tab.text = TAB_LAYOUT_LABELS[position]
-                tab.setIcon(TAB_LAYOUT_ICONS[position])
-            }.attach()
+        binding.bottomNavigation.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.nav_to_be_read_list -> {
+                    viewPager2.setCurrentItem(0)
+                    true
+                }
+                R.id.nav_reading_list -> {
+                    viewPager2.setCurrentItem(1)
+                    true
+                }
+                R.id.nav_done_list -> {
+                    viewPager2.setCurrentItem(2)
+                    true
+                }
+                else -> false
+            }
         }
+
+        binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                when (position) {
+                    0 -> binding.bottomNavigation.menu.findItem(R.id.nav_to_be_read_list).isChecked =
+                        true
+                    1 -> binding.bottomNavigation.menu.findItem(R.id.nav_reading_list).isChecked =
+                        true
+                    2 -> binding.bottomNavigation.menu.findItem(R.id.nav_done_list).isChecked =
+                        true
+                }
+            }
+
+        })
+
 
     }
 

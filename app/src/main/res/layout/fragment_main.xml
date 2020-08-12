@@ -1,49 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_fragment__root_layout"
-    android:background="#ffffff"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:baselineAligned="false"
+
     android:orientation="vertical"
     tools:context=".ui.main.MainFragment">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout"
-        app:tabMode="fixed"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryAlt"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:tabIndicatorColor="@color/colorAccent"
-        app:tabTextColor="@color/design_default_color_background">
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/ic_to_be_read_book"
-            android:text="@string/tab_item_first" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/ic_reading_book_24"
-            android:text="@string/tab_item_second" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/ic_baseline_done_24"
-            android:text="@string/tab_item_third" />
-    </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
     </androidx.viewpager2.widget.ViewPager2>
 
-</LinearLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemBackground="@color/colorPrimary"
+        app:labelVisibilityMode="auto"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_navigation_menu">
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
