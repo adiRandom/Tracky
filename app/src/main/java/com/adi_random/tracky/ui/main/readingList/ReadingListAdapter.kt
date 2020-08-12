@@ -5,11 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.adi_random.tracky.databinding.DoneReadingListItemBinding
 import com.adi_random.tracky.databinding.ReadingListItemBinding
+import com.adi_random.tracky.views.FreezableRecyclerView
 
 /**
  * Created by Adrian Pascu on 13-Jul-20.
  */
-class ReadingListAdapter(private var viewModel: ReadingListViewModel) :
+class ReadingListAdapter(
+    private var viewModel: ReadingListViewModel,
+    private val parent: RecyclerView
+) :
     RecyclerView.Adapter<AbstractReadingListViewHolder>() {
 
     private var dataset = viewModel.readingList.value
@@ -25,7 +29,7 @@ class ReadingListAdapter(private var viewModel: ReadingListViewModel) :
             DoneReadingListViewHolder(binding)
         } else {
             val binding = ReadingListItemBinding.inflate(inflater, parent, false)
-            ReadingListViewHolder(binding) {
+            ReadingListViewHolder(binding, this.parent as FreezableRecyclerView) {
                 viewModel.moveToTheNextList(it)
             }
         }
@@ -39,8 +43,11 @@ class ReadingListAdapter(private var viewModel: ReadingListViewModel) :
 
     override fun getItemCount(): Int = dataset?.size ?: 0
 
+
     override fun onBindViewHolder(holder: AbstractReadingListViewHolder, position: Int) {
         holder.bind(this.dataset?.get(position))
+//        holder.setIsRecyclable(false)
     }
+
 
 }

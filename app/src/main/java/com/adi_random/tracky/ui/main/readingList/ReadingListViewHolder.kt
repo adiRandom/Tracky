@@ -6,12 +6,14 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.adi_random.tracky.R
 import com.adi_random.tracky.databinding.ReadingListItemBinding
 import com.adi_random.tracky.models.GoodreadsBook
+import com.adi_random.tracky.views.FreezableRecyclerView
 
 /**
  * Created by Adrian Pascu on 13-Jul-20.
  */
 
-abstract class AbstractReadingListViewHolder(root: View) : ViewHolder(root) {
+abstract class AbstractReadingListViewHolder(root: View) :
+    ViewHolder(root) {
     abstract fun bind(newData: GoodreadsBook?)
 }
 
@@ -19,6 +21,7 @@ abstract class AbstractReadingListViewHolder(root: View) : ViewHolder(root) {
 //TODO: Add actions based on ReadingListType
 class ReadingListViewHolder(
     private var binding: ReadingListItemBinding,
+    private val parent: FreezableRecyclerView,
     private val moveBookToNextList: (pos: Int) -> Unit
 ) :
     AbstractReadingListViewHolder(binding.root) {
@@ -44,21 +47,18 @@ class ReadingListViewHolder(
                 if (p3 > 0) {
                     binding.readingListItemLayout.setBackgroundResource(R.drawable.item_border)
                 }
+
+                //Freeze the recyclerview
+
+                this@ReadingListViewHolder.parent.swipeFrozen = p3 != 1f
             }
 
             override fun onTransitionCompleted(p0: MotionLayout?, p1: Int) {
 //                Check if it's end and not start
 
                 if (p1 == animationEndId) {
-//           Shrink the back
-//                TODO: Add animation
-//                val animation = binding.readingListItemBack.animate().scaleY(0f)
-//                animation.duration = 500
-//                animation.withEndAction {
-//                    //Move the item from this list to the next
-//
-//                }
                     moveBookToNextList(bindingAdapterPosition)
+
                 } else {
 //                    Remove the border
                     binding.readingListItemLayout.setBackgroundResource(R.drawable.item_background)
@@ -72,6 +72,14 @@ class ReadingListViewHolder(
         binding.book = newData
         if (binding.book?.owner == ReadingListType.READING)
             binding.imageButton.setImageResource(R.drawable.ic_baseline_done_24)
+
+        //Reset the transition
+        binding.readingListItemMotion.apply {
+            progress = 0f
+            setTransition(R.id.start, R.id.end)
+        }
+        binding.readingListItemLayout.setBackgroundResource(R.drawable.item_background)
+
         binding.executePendingBindings()
     }
 

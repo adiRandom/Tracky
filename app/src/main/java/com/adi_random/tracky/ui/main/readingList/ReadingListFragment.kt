@@ -44,11 +44,12 @@ class ReadingListFragment : Fragment() {
         //Init the recycler view
 
         val layoutManager = LinearLayoutManager(activity)
-        this.readingListAdapter = ReadingListAdapter(viewModel)
+        this.readingListAdapter = ReadingListAdapter(viewModel, binding.readingListRecyclerView)
         this.binding.readingListRecyclerView.apply {
             adapter = readingListAdapter
             this.layoutManager = layoutManager
         }
+
 
         return binding.root
     }

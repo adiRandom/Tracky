@@ -7,10 +7,11 @@
     android:paddingTop="@dimen/search_result_padding"
     tools:context=".ui.main.readingList.ReadingListFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.adi_random.tracky.views.FreezableRecyclerView
         android:id="@+id/reading_list_recycler_view"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
+        android:nestedScrollingEnabled="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
