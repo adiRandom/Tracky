@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -16,23 +16,38 @@
         android:id="@+id/reading_list_item_motion"
         android:layout_width="match_parent"
         android:layout_height="72dp"
+
         app:layoutDescription="@xml/reading_list_item_scene">
 
-        <!--        TODO: Change source-->
+
         <ImageView
             android:id="@+id/reading_list_item_back"
             android:layout_width="match_parent"
+            android:background="@color/colorAccent"
             android:layout_height="72dp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="48dp"
+            android:background="@color/colorAccent"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_reading_book_24" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/reading_list_item_layout"
             android:layout_width="match_parent"
             android:layout_height="72dp"
+            android:alpha="1"
+            android:background="#ffffffff"
             android:gravity="center"
             android:paddingLeft="@dimen/search_result_padding"
             android:paddingRight="@dimen/search_result_padding"
@@ -95,6 +110,7 @@
                     android:textColor="@color/textSecondary" />
 
             </LinearLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

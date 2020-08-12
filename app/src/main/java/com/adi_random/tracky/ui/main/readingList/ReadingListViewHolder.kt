@@ -42,7 +42,7 @@ class ReadingListViewHolder(
             override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) {
                 //Add border
                 if (p3 > 0) {
-                    binding.readingListItemMotion.setBackgroundResource(R.drawable.item_border)
+                    binding.readingListItemLayout.setBackgroundResource(R.drawable.item_border)
                 }
             }
 
@@ -61,7 +61,7 @@ class ReadingListViewHolder(
                     moveBookToNextList(bindingAdapterPosition)
                 } else {
 //                    Remove the border
-                    binding.readingListItemMotion.setBackgroundColor(0x00ffffff)
+                    binding.readingListItemLayout.setBackgroundResource(R.drawable.item_background)
                 }
 
             }
@@ -70,6 +70,8 @@ class ReadingListViewHolder(
 
     override fun bind(newData: GoodreadsBook?) {
         binding.book = newData
+        if (binding.book?.owner == ReadingListType.READING)
+            binding.imageButton.setImageResource(R.drawable.ic_baseline_done_24)
         binding.executePendingBindings()
     }
 
